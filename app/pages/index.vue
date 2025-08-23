@@ -34,7 +34,7 @@
 <script setup>
 const { t } = useI18n()
 const user = await useUser();
-const projects = await useAllProjects();
+const projects = await useAllProjects(true);
 
 // Show contact info if requested
 const { query } = useRoute();

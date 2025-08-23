@@ -9,7 +9,7 @@
 
 <script setup>
 const ASSETS_URL = useRuntimeConfig().public.ASSETS_BASE_URL;
-const { src, alt, width, height, sizes } = defineProps({
+const { src, alt, width, height, sizes, pickerMode } = defineProps({
     src: {
         type: String,
         required: true
@@ -34,6 +34,11 @@ const { src, alt, width, height, sizes } = defineProps({
         required: false,
         default: null
     },
+    pickerMode: {
+        type: Boolean,
+        required: false,
+        default: false
+    }
 });
 
 const KNOWN_VIDEO_TYPES = ['MP4', 'AVI', 'MOV', 'WMV', 'MKV', 'FLV', 'MPEG', '3GP']

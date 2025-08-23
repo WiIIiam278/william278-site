@@ -82,7 +82,7 @@ const userFilter = ref(useRoute()?.query?.user);
 
 const tickets = ref(null);
 const projects = await useAllProjects();
-const emit = defineEmits('show-user');
+const emit = defineEmits(['show-user']);
 
 const { user, searchPrefill } = defineProps({
     user: {

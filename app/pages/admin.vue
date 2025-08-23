@@ -53,7 +53,7 @@
 <script setup>
 const user = await useUser();
 const activeTab = defineModel('activeTab')
-const searchPrefill = defineModel('')
+const searchPrefill = defineModel('searchPrefill')
 
 const tabs = [];
 if (useIsUserRole(user.value, 'staff')) {

@@ -86,7 +86,7 @@ const { user, searchPrefill } = defineProps({
     }
 });
 const { auth, xsrf } = useAuth();
-const emit = defineEmits('show-tickets');
+const emit = defineEmits(['show-tickets']);
 const restrictedProjects = await useRestrictedProjects();
 
 // Prefill user search

@@ -3,7 +3,7 @@ export const useUser = async () => {
     
     const user = useNuxtData('user');
     const { auth, xsrf } = useAuth();
-    const { data } = await useLazyFetch(`${BASE_URL}/v1/users/@me`, {
+    const { data } = await useFetch(`${BASE_URL}/v1/users/@me`, {
         method: 'GET',
         credentials: auth ? 'include' : 'omit',
         headers: {

@@ -66,7 +66,7 @@ const pageNumber = ref(1);
 const itemsPerPage = ref(15);
 const emailSearch = ref('');
 const transactions = ref(null);
-const emit = defineEmits('show-user');
+const emit = defineEmits(['show-user']);
 
 const projects = await useRestrictedProjects();
 const getProject = (proj) => projects.find(p => p.slug === proj)
