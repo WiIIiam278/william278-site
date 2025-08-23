@@ -1,7 +1,7 @@
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
   // Modules
-  modules: ['nuxt-icon', '@nuxt/content', '@nuxtjs/algolia', '@nuxtjs/google-fonts', '@nuxtjs/i18n', 'nuxt-tiptap-editor', 'nuxt-monaco-editor', 'nuxt-echarts', '@nuxt/image'],
+  modules: ['@nuxt/content', '@nuxtjs/algolia', '@nuxtjs/google-fonts', '@nuxtjs/i18n', 'nuxt-tiptap-editor', 'nuxt-monaco-editor', 'nuxt-echarts', '@nuxt/image', '@nuxt/icon'],
 
   // Fonts
   googleFonts: {

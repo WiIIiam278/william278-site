@@ -8,6 +8,8 @@ export const useTranscriptUrl = (id) => {
 }
 
 export const useTranscript = async (id) => {
-    const { data } = await useFetch(useTranscriptUrl(id));
+    const { data } = await useFetch(useTranscriptUrl(id), {
+        deep: true
+    });
     return data;
 }
