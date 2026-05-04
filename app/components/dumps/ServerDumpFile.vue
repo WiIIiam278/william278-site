@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-useMonacoWithLongLang();
+await useMonacoWithLogLang();
 
 const { lang } = defineProps({
     lang: {
