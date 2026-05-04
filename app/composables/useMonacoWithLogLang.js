@@ -1,39 +1,48 @@
-export const useMonacoWithLongLang = () => {
-    const monaco = useMonaco();
+let monacoSetupPromise = null;
 
-    const extendDefaults = () => {
-        for (let i = 1; i < arguments.length; i++) {
-            if (!arguments[i]) {
-                continue;
-            }
-            for (const key in arguments[i]) {
-                if (arguments[i].hasOwnProperty(key)) {
-                    arguments[0][key] = arguments[i][key];
+export const useMonacoWithLogLang = () => {
+    if (monacoSetupPromise) {
+        return monacoSetupPromise;
+    }
+
+    monacoSetupPromise = (async () => {
+        const monaco = await useMonaco();
+
+        const extendDefaults = (...args) => {
+            for (let i = 1; i < args.length; i++) {
+                if (!args[i]) {
+                    continue;
+                }
+                for (const key in args[i]) {
+                    if (Object.prototype.hasOwnProperty.call(args[i], key)) {
+                        args[0][key] = args[i][key];
+                    }
                 }
             }
+            return args[0];
         }
-        return arguments[0];
-    }
     
-    const typeCustomTokenizer = [
-        // {name: 'orange-alert', regex: 'WARN', style: {foreground: '#FFA500', fontStyle: 'bold'}},
-        // {name: 'red-alert', regex: 'ERROR', style: {foreground: '#FF0000', fontStyle: 'bold'}}
-    ];
+        const typeCustomTokenizer = [
+            // {name: 'orange-alert', regex: 'WARN', style: {foreground: '#FFA500', fontStyle: 'bold'}},
+            // {name: 'red-alert', regex: 'ERROR', style: {foreground: '#FF0000', fontStyle: 'bold'}}
+        ];
     
-    monaco.languages.register({id: 'log'});
-    
-    const logCustomRules = [];
-    const themeRules = [];
-    for (let i = 0; i < typeCustomTokenizer.length; i++) {
-        try {
-            logCustomRules.push([new RegExp(typeCustomTokenizer[i].regex), typeCustomTokenizer[i].name]);
-            themeRules.push(extendDefaults({token: typeCustomTokenizer[i].name + '.log'}, typeCustomTokenizer[i].style));
-        } catch (e) {
-            console.error("error", e);
+        if (!monaco.languages.getLanguages().some((language) => language.id === 'log')) {
+            monaco.languages.register({id: 'log'});
         }
-    }
     
-    monaco.languages.setMonarchTokensProvider('log', {
+        const logCustomRules = [];
+        const themeRules = [];
+        for (let i = 0; i < typeCustomTokenizer.length; i++) {
+            try {
+                logCustomRules.push([new RegExp(typeCustomTokenizer[i].regex), typeCustomTokenizer[i].name]);
+                themeRules.push(extendDefaults({token: typeCustomTokenizer[i].name + '.log'}, typeCustomTokenizer[i].style));
+            } catch (e) {
+                console.error("error", e);
+            }
+        }
+    
+        monaco.languages.setMonarchTokensProvider('log', {
         defaultToken: "",
         tokenPostfix: ".log",
         tokenizer: {
@@ -101,18 +110,23 @@ export const useMonacoWithLongLang = () => {
         }
     });
     
-    monaco.editor.defineTheme('william278', {
-        base: 'vs-dark',
-        inherit: true,
-        rules: [
-            {token: 'info.log', foreground: '#4b71ca'},
-            {token: 'error.log', foreground: '#ff0000', fontStyle: 'bold'},
-            {token: 'warning.log', foreground: '#FFA500'},
-            {token: 'date.log', foreground: '#008800'},
-            {token: 'exceptiontype.log', foreground: '#808080'},
-            ...themeRules
-        ],
-        colors: {
-        },
-    });
+        monaco.editor.defineTheme('william278', {
+            base: 'vs-dark',
+            inherit: true,
+            rules: [
+                {token: 'info.log', foreground: '#4b71ca'},
+                {token: 'error.log', foreground: '#ff0000', fontStyle: 'bold'},
+                {token: 'warning.log', foreground: '#FFA500'},
+                {token: 'date.log', foreground: '#008800'},
+                {token: 'exceptiontype.log', foreground: '#808080'},
+                ...themeRules
+            ],
+            colors: {
+            },
+        });
+    })();
+
+    return monacoSetupPromise;
 }
+
+export const useMonacoWithLongLang = useMonacoWithLogLang;
